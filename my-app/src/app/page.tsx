@@ -1,5 +1,6 @@
 import { NextPage } from "next";
 import Image from "next/image";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   return (
@@ -11,6 +12,10 @@ const Home: NextPage = () => {
         alt="무지개 배경"
       />
       <div>{process.env.NEXT_JS}</div>
+
+      <Link href={"/mint"}>
+        <button>민팅페이지</button>
+      </Link>
     </div>
   );
 };
