@@ -24,3 +24,13 @@ export const saleNftContract = new web3.eth.Contract(
   SALE_NFT_ABI,
   SALE_NFT_ADDRESS
 );
+
+export interface INft {
+  name: string;
+  description: string;
+  image: string;
+  attributes: {
+    trait_type: string;
+    value: string;
+  }[];
+}
