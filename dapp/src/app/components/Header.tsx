@@ -25,7 +25,13 @@ const Header: FC = () => {
 
   return (
     <div className="bg-green-100 py-4 pr-8 flex justify-end">
-      {account ? account : <button onClick={onClickLogIn}>지갑로그인</button>}
+      {account ? (
+        <div>
+          {account.substring(0, 4)}...{account.substring(account.length - 4)}
+        </div>
+      ) : (
+        <button onClick={onClickLogIn}>지갑로그인</button>
+      )}
     </div>
   );
 };
