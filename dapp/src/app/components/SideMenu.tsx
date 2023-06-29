@@ -11,9 +11,12 @@ const SideMenu: FC<SideMenuProps> = ({ children }) => {
       {/* shrink-0 옵션 줘야 w-full로 인해 줄어드는 것 막을 수 있음 */}
       <nav className="bg-yellow-100 w-60 shrink-0 flex flex-col py-8 pl-4">
         <div>프로젝트 다덴부</div>
-        <div className="bg-orange-100 grow">
+        <div className="bg-orange-100 grow pt-12 flex flex-col">
           <Link href="/">
             <button>Main페이지</button>
+          </Link>
+          <Link href="/mint">
+            <button>Mint페이지</button>
           </Link>
         </div>
         <div>Created by jiseon</div>
