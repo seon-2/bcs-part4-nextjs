@@ -3,14 +3,12 @@
 // (nextjs는 서버프레임워크이기 때문에 서버에서 실행되어야 할 파일과 클라이언트에서 실행되어야 하는 파일을 구분해줘야 함)
 
 import { FC, useContext, useState } from "react";
-import { MetaMaskSDK } from "@metamask/sdk";
+
 import { AppContext } from "../layout";
+import { ethereum } from "../lib/web3.config";
 
 const Header: FC = () => {
   const { account, setAccount } = useContext(AppContext);
-
-  const MMSDK = new MetaMaskSDK();
-  const ethereum = MMSDK.getProvider();
 
   const onClickLogIn = async () => {
     try {
