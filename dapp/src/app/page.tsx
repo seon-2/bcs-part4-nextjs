@@ -1,8 +1,15 @@
+"use client";
+
 import { NextPage } from "next";
+import { useContext } from "react";
+import { AppContext } from "./layout";
 
 const Home: NextPage = () => {
+  const { account } = useContext(AppContext);
+
   return (
     <main className="px-8 pt-16">
+      {account ? account : "로그인 전"}
       <div>
         dotenv는 애플리케이션의 환경 변수를 관리하기 위한 파일 형식 및
         라이브러리입니다.
