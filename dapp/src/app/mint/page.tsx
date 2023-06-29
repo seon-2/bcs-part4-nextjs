@@ -19,8 +19,25 @@ const Mint: NextPage = () => {
     }
   };
 
+  const onClickBalanceOf = async () => {
+    try {
+      const response = await mintNftContract.methods.balanceOf(account).call();
+
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-    <div>{account && <button onClick={onClickMint}>민팅하기</button>}</div>
+    <div>
+      <div>{account && <button onClick={onClickMint}>민팅하기</button>}</div>
+      <div>
+        {account && (
+          <button onClick={onClickBalanceOf}>nft 개수 확인하기</button>
+        )}
+      </div>
+    </div>
   );
 };
 
