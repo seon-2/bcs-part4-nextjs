@@ -5,7 +5,7 @@
 import { FC, useContext, useState } from "react";
 
 import { AppContext } from "../layout";
-import { ethereum } from "../lib/web3.config";
+import { ethereum, MUMBAI_CHAIN_ID, web3 } from "../lib/web3.config";
 
 const Header: FC = () => {
   const { account, setAccount } = useContext(AppContext);
@@ -17,6 +17,20 @@ const Header: FC = () => {
       });
       setAccount(accounts[0]);
       //   console.log(accounts);
+
+      if (parseInt(ethereum?.networkVersion) !== MUMBAI_CHAIN_ID) {
+        await ethereum?.request({
+          method: "wallet_addEthereumChain",
+          params: [
+            {
+              chainName: "Mumbai",
+              chainId: web3.utils.numberToHex(MUMBAI_CHAIN_ID),
+              nativeCurrency: { name: "MATIC", decimals: 18, symbol: "MATIC" },
+              rpcUrls: ["https://rpc-mumbai.maticvigil.com"],
+            },
+          ],
+        });
+      }
     } catch (error) {
       console.error(error);
     }
