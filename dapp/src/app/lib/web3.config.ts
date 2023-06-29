@@ -10,6 +10,9 @@ export const MUMBAI_CHAIN_ID = 80001;
 
 export const web3 = new Web3(ethereum);
 
+export const PINATA_URL =
+  "https://olbm.mypinata.cloud/ipfs/QmU52T5t4bXtoUqQYStgx39DdXy3gLQq7KDuF1F9g3E9Qy";
+
 const MINT_NFT_ADDRESS = "0xE07675529794B77B193a42eb1375b6d8b4fAeA87";
 const SALE_NFT_ADDRESS = "0x8aED796D37363A5bE66446E1e1c0b8904f8e473B";
 
