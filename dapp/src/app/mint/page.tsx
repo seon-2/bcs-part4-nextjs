@@ -3,11 +3,11 @@ import { useContext, useState } from "react";
 import { INft, mintNftContract, PINATA_URL } from "../lib/web3.config";
 import { NextPage } from "next";
 import { AppContext } from "../layout";
-import axios from "axios";
+import NftCard from "../components/NftCard";
 
 const Mint: NextPage = () => {
   const { account } = useContext(AppContext);
-  const [myNewNft, setMyNewNft] = useState<INft>();
+  const [tokenId, setTokenId] = useState<number>();
 
   const onClickMint = async () => {
     try {
@@ -20,19 +20,8 @@ const Mint: NextPage = () => {
         const myNftResponse = await mintNftContract.methods
           .getLatestNft(account)
           .call();
-        // 피나타로부터 메타데이터 가져오기
-        const metadataResponse = await axios.get(
-          `${PINATA_URL}/${Number(myNftResponse)}.json`
-        );
 
-        // console.log(metadataResponse);
-
-        setMyNewNft({
-          name: metadataResponse.data.name,
-          description: metadataResponse.data.description,
-          image: metadataResponse.data.image,
-          attributes: metadataResponse.data.attributes,
-        });
+        setTokenId(Number(myNftResponse));
       }
     } catch (error) {
       console.error(error);
@@ -53,6 +42,7 @@ const Mint: NextPage = () => {
     <div>
       <div>{account && <button onClick={onClickMint}>민팅하기</button>}</div>
       {account && <button onClick={onClickBalanceOf}>nft 개수 확인하기</button>}
+      {tokenId && <NftCard tokenId={tokenId} />}
     </div>
   );
 };
