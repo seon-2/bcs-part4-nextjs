@@ -18,6 +18,9 @@ const SideMenu: FC<SideMenuProps> = ({ children }) => {
           <Link href="/mint">
             <button>Mint페이지</button>
           </Link>
+          <Link href="/my-nft">
+            <button>My NFT</button>
+          </Link>
         </div>
         <div>Created by jiseon</div>
       </nav>
