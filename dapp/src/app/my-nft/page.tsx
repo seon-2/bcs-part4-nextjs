@@ -40,8 +40,8 @@ const MyNft: NextPage = () => {
 
   return (
     <div>
-      {/* tokenIds 배열을 돌면서 NftCard 출력. key 설정 필요(index). props로 tokenId 보냄. */}
-      {tokenIds?.map((v, i) => {
+      {/* tokenIds 배열을 돌면서 NftCard 최신순으로(reverse)출력. key 설정 필요(index). props로 tokenId 보냄. */}
+      {tokenIds?.reverse().map((v, i) => {
         return <NftCard key={i} tokenId={v} />;
       })}
     </div>
