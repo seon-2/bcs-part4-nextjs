@@ -14,7 +14,7 @@ export const PINATA_URL =
   "https://olbm.mypinata.cloud/ipfs/QmU52T5t4bXtoUqQYStgx39DdXy3gLQq7KDuF1F9g3E9Qy";
 
 const MINT_NFT_ADDRESS = "0xE07675529794B77B193a42eb1375b6d8b4fAeA87";
-const SALE_NFT_ADDRESS = "0xb1A0388ee5BbB33ED1Bc08fFB30E1Dd0E59192b8";
+export const SALE_NFT_ADDRESS = "0xb1A0388ee5BbB33ED1Bc08fFB30E1Dd0E59192b8";
 
 export const mintNftContract = new web3.eth.Contract(
   MINT_NFT_ABI,

@@ -1,6 +1,6 @@
 "use client";
 
-import { mintNftContract } from "../lib/web3.config";
+import { mintNftContract, SALE_NFT_ADDRESS } from "../lib/web3.config";
 import { NextPage } from "next";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../layout";
@@ -29,12 +29,26 @@ const MyNft: NextPage = () => {
     }
   };
 
+  // 판매상태 가져오는 함수
+  const getSaleStatus = async () => {
+    try {
+      const response = await mintNftContract.methods
+        .isApprovedForAll(account, SALE_NFT_ADDRESS)
+        .call();
+
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   // 지갑 로그인 안 한 상태에서 오류 발생함. 로그인 안했으면 메인 페이지로 이동하게끔(리다이렉트)
   useEffect(() => {
     if (!account) {
       redirect("/");
     }
 
+    getSaleStatus();
     getMyNfts();
   }, [account]);
 
