@@ -2,7 +2,7 @@
 
 import { mintNftContract } from "../lib/web3.config";
 import { NextPage } from "next";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../layout";
 import { redirect } from "next/navigation"; // 수동으로 입력 필요 (자동완성 X)
 
@@ -10,12 +10,19 @@ const MyNft: NextPage = () => {
   // 내가 가진 nft 보여주는 기능
   // solidity의 getAllNft 함수 사용 (주소값 넣고 uint[] 반환함)
   const { account } = useContext(AppContext);
+  const [tokenIds, setTokenIds] = useState<number[]>();
 
   const getMyNfts = async () => {
     try {
-      const response = await mintNftContract.methods.getAllNft(account).call();
+      const response: bigint[] = await mintNftContract.methods
+        .getAllNft(account)
+        .call();
 
-      console.log(response);
+      // 숫자형 배열로 만들기
+      const tempArray = response.map((v) => {
+        return Number(v);
+      });
+      setTokenIds(tempArray);
     } catch (error) {
       console.error(error);
     }
@@ -29,6 +36,11 @@ const MyNft: NextPage = () => {
 
     getMyNfts();
   }, [account]);
+
+  // 확인용 임시 useEffect (나중에 삭제)
+  useEffect(() => {
+    console.log(tokenIds);
+  }, [tokenIds]);
 
   return <div>MyNft</div>;
 };
