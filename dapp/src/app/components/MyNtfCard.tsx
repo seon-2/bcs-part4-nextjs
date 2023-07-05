@@ -20,7 +20,7 @@ const MyNftCard: FC<MyNftCardProps> = ({ tokenId }) => {
         .getNftPrice(tokenId)
         .call();
 
-      setCurrentPrice(Number(response));
+      setCurrentPrice(Number(web3.utils.fromWei(Number(response), "ether")));
     } catch (error) {
       console.error(error);
     }
@@ -45,6 +45,10 @@ const MyNftCard: FC<MyNftCardProps> = ({ tokenId }) => {
         });
 
       console.log(response);
+
+      if (Number(response.status) === 1) {
+        setCurrentPrice(Number(salePrice));
+      }
     } catch (error) {
       console.error(error);
     }
