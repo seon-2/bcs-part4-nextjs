@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../layout";
 import { redirect } from "next/navigation"; // 수동으로 입력 필요 (자동완성 X)
 import NftCard from "../components/NftCard";
+import MyNftCard from "../components/MyNtfCard";
 
 const MyNft: NextPage = () => {
   // 내가 가진 nft 보여주는 기능
@@ -83,7 +84,7 @@ const MyNft: NextPage = () => {
 
       {/* tokenIds 배열을 돌면서 NftCard 최신순으로(reverse)출력. key 설정 필요(index). props로 tokenId 보냄. */}
       {tokenIds?.reverse().map((v, i) => {
-        return <NftCard key={i} tokenId={v} />;
+        return <MyNftCard key={i} tokenId={v} />;
       })}
     </div>
   );
