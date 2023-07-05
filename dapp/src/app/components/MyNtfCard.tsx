@@ -54,6 +54,25 @@ const MyNftCard: FC<MyNftCardProps> = ({ tokenId }) => {
     }
   };
 
+  // 판매취소 버튼
+  const onClickCancelNft = async () => {
+    try {
+      const response = await saleNftContract.methods
+        .cancelSaleNft(tokenId)
+        .send({
+          from: account,
+        });
+
+      console.log(response);
+
+      if (Number(response.status) === 1) {
+        setCurrentPrice(0);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     getCurrentPrice();
   }, []);
@@ -77,7 +96,10 @@ const MyNftCard: FC<MyNftCardProps> = ({ tokenId }) => {
           )}
         </>
       ) : (
-        <div>현재 가격 : {currentPrice}Matic</div>
+        <div>
+          현재 가격 : {currentPrice}Matic
+          <button onClick={onClickCancelNft}>판매취소</button>
+        </div>
       )}
       <NftCard tokenId={tokenId} />
     </div>
