@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../layout";
 import { redirect } from "next/navigation"; // 수동으로 입력 필요 (자동완성 X)
 import NftCard from "../components/NftCard";
-import MyNftCard from "../components/MyNtfCard";
+import MyNftCard from "../components/MyNftCard";
 
 const MyNft: NextPage = () => {
   // 내가 가진 nft 보여주는 기능
