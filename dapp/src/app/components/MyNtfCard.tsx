@@ -1,6 +1,7 @@
-import { FC, FormEventHandler, useEffect, useState } from "react";
+import { FC, FormEventHandler, useContext, useEffect, useState } from "react";
 import NftCard from "./NftCard";
-import { saleNftContract } from "../lib/web3.config";
+import { saleNftContract, web3 } from "../lib/web3.config";
+import { AppContext } from "@/app/layout";
 
 interface MyNftCardProps {
   tokenId: number;
@@ -10,6 +11,7 @@ const MyNftCard: FC<MyNftCardProps> = ({ tokenId }) => {
   const [currentPrice, setCurrentPrice] = useState<number>(0);
   const [saleToggle, setSaleToggle] = useState<boolean>(false);
   const [salePrice, setSalePrice] = useState<string>("");
+  const { account } = useContext(AppContext);
 
   // nft 가격 받아오기
   const getCurrentPrice = async () => {
@@ -33,6 +35,16 @@ const MyNftCard: FC<MyNftCardProps> = ({ tokenId }) => {
   const onSubmitSalePrice: FormEventHandler = async (e) => {
     try {
       e.preventDefault();
+
+      if (!salePrice || isNaN(parseInt(salePrice))) return;
+
+      const response = await saleNftContract.methods
+        .setSaleNft(tokenId, web3.utils.toWei(salePrice, "ether"))
+        .send({
+          from: account,
+        });
+
+      console.log(response);
     } catch (error) {
       console.error(error);
     }
