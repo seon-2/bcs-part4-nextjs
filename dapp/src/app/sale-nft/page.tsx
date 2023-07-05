@@ -1,6 +1,6 @@
 "use client";
 
-import NftCard from "../components/NftCard";
+import SaleNftCard from "../components/SaleNftCard";
 import { saleNftContract } from "../lib/web3.config";
 import { NextPage } from "next";
 import { useEffect, useState } from "react";
@@ -30,7 +30,7 @@ const SaleNft: NextPage = () => {
   return (
     <div>
       {saleNfts?.map((v, i) => (
-        <NftCard key={i} tokenId={v} />
+        <SaleNftCard key={i} tokenId={v} />
       ))}
     </div>
   );
