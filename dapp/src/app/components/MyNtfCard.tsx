@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, FormEventHandler, useEffect, useState } from "react";
 import NftCard from "./NftCard";
 import { saleNftContract } from "../lib/web3.config";
 
@@ -9,6 +9,7 @@ interface MyNftCardProps {
 const MyNftCard: FC<MyNftCardProps> = ({ tokenId }) => {
   const [currentPrice, setCurrentPrice] = useState<number>(0);
   const [saleToggle, setSaleToggle] = useState<boolean>(false);
+  const [salePrice, setSalePrice] = useState<string>("");
 
   // nft 가격 받아오기
   const getCurrentPrice = async () => {
@@ -28,9 +29,20 @@ const MyNftCard: FC<MyNftCardProps> = ({ tokenId }) => {
     setSaleToggle(!saleToggle);
   };
 
+  // 판매가격 설정
+  const onSubmitSalePrice: FormEventHandler = async (e) => {
+    try {
+      e.preventDefault();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     getCurrentPrice();
   }, []);
+
+  useEffect(() => console.log(salePrice), [salePrice]);
 
   return (
     <div>
@@ -38,8 +50,12 @@ const MyNftCard: FC<MyNftCardProps> = ({ tokenId }) => {
         <>
           <button onClick={onClickSaleToggle}>판매등록</button>
           {saleToggle && (
-            <form>
-              <input type="text" />
+            <form onSubmit={onSubmitSalePrice}>
+              <input
+                type="text"
+                value={salePrice}
+                onChange={(e) => setSalePrice(e.target.value)}
+              />
               <input type="submit" value="승인" />
             </form>
           )}
