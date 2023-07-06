@@ -30,7 +30,8 @@ const SaleNft: NextPage = () => {
   return (
     <div>
       {saleNfts?.map((v, i) => (
-        <SaleNftCard key={i} tokenId={v} />
+        // Sale 페이지에서 구매하기 누르면 판매중인 nft 다시 실행시키기 위해 getSaleNfts() 보내기
+        <SaleNftCard key={i} tokenId={v} getSaleNfts={getSaleNfts} />
       ))}
     </div>
   );

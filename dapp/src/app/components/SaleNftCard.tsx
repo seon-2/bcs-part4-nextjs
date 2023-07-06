@@ -5,9 +5,10 @@ import { AppContext } from "../layout";
 
 interface SaleNftCardProps {
   tokenId: number;
+  getSaleNfts: () => Promise<void>;
 }
 
-const SaleNftCard: FC<SaleNftCardProps> = ({ tokenId }) => {
+const SaleNftCard: FC<SaleNftCardProps> = ({ tokenId, getSaleNfts }) => {
   const [salePrice, setSalePrice] = useState<number>(0);
   const [isMyNft, setIsMyNft] = useState<boolean>(false);
   const { account } = useContext(AppContext);
@@ -49,6 +50,11 @@ const SaleNftCard: FC<SaleNftCardProps> = ({ tokenId }) => {
         .send({ from: account, value: web3.utils.toWei(salePrice, "ether") });
 
       console.log(response);
+
+      // 정상적으로 구매되었으면 판매중인 nft 리스트 불러오기
+      if (Number(response.status) === 1) {
+        getSaleNfts();
+      }
     } catch (error) {
       console.error(error);
     }
