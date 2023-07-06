@@ -41,6 +41,19 @@ const SaleNftCard: FC<SaleNftCardProps> = ({ tokenId }) => {
     }
   };
 
+  // 구매 기능
+  const onClickPurchase = async () => {
+    try {
+      const response = await saleNftContract.methods
+        .purchaseNft(tokenId)
+        .send({ from: account, value: web3.utils.toWei(salePrice, "ether") });
+
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     getSalePrice();
   }, []);
@@ -61,7 +74,7 @@ const SaleNftCard: FC<SaleNftCardProps> = ({ tokenId }) => {
         account && (
           // 다른 사람들의 nft에 붙일 부분
           <div>
-            <button>구매하기</button>
+            <button onClick={onClickPurchase}>구매하기</button>
           </div>
         )
       )}
