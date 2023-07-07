@@ -26,6 +26,7 @@
     "web3": "^4.0.2"
   },
   "devDependencies": {
+    "@types/uuid": "^9.0.2",
     "prisma": "^4.16.2"
   }
 }
