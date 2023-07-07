@@ -1,5 +1,6 @@
 "use client";
 
+import axios from "axios";
 import { NextPage } from "next";
 import { FormEventHandler, useEffect, useState } from "react";
 
@@ -20,7 +21,13 @@ const Home: NextPage = () => {
         method: "eth_requestAccounts",
       });
 
-      console.log(accounts);
+      // 메타마스크 로그인 해서 지갑주소 있으면
+      if (accounts) {
+        // axios로 POST 요청 보내기
+        const response = await axios.post("http://localhost:3000/api/user");
+
+        console.log(response);
+      }
     } catch (error) {
       console.error(error);
     }
