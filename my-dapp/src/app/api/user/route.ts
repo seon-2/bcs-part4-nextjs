@@ -7,16 +7,19 @@ import { NextResponse } from "next/server";
 export const POST = async (req: Request) => {
   try {
     // json에 body가 담겨있음
-    const { account, email } = await req.json();
+    const { account, email, signedToken } = await req.json();
 
     // 지갑주소, 이메일 DB에 저장
     // upsert = update + create (처음 들어오면 만들고 있으면 업데이트)
     const user = await prisma.user.upsert({
       where: { account },
-      update: {},
+      update: {
+        signedToken,
+      },
       create: {
         account,
         email,
+        signedToken,
       },
       select: {
         account: true,
