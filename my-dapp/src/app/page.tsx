@@ -40,6 +40,10 @@ const Home: NextPage = () => {
           signedToken,
         });
         console.log(response);
+
+        // localStorage에 signedToken 저장 
+        // - 클라이언트에 저장된 토큰이 유출될 경우 db 접근해서 악의적 행동 가능해짐 -> uuid 사용
+        localStorage.setItem("signedToken", signedToken);
       }
     } catch (error) {
       console.error(error);
