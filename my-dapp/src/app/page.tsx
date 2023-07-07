@@ -37,7 +37,7 @@ const Home: NextPage = () => {
         // 서명된 값 기준으로 지갑주소 꺼내오기 (복호화) -> ecRecover 사용 X (값이 계속 변경됨)
 
         // axios로 POST 요청 보내기
-        const response = await axios.post("http://localhost:3000/api/user", {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_URL}/api/user`, {
           account: accounts[0],
           email, // 키, 벨류가 이름이 같아 합쳐서
           signedToken,
