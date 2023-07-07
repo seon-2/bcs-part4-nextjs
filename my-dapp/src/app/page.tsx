@@ -24,8 +24,10 @@ const Home: NextPage = () => {
       // 메타마스크 로그인 해서 지갑주소 있으면
       if (accounts) {
         // axios로 POST 요청 보내기
-        const response = await axios.post("http://localhost:3000/api/user");
-
+        const response = await axios.post("http://localhost:3000/api/user", {
+          account: accounts[0],
+          email, // 키, 벨류가 이름이 같아 합쳐서
+        });
         console.log(response);
       }
     } catch (error) {
