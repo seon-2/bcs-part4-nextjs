@@ -1,6 +1,7 @@
 "use client";
 
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 import { NextPage } from "next";
 import { FormEventHandler, useEffect, useState } from "react";
 import { personal } from "./lib/client";
@@ -26,12 +27,14 @@ const Home: NextPage = () => {
       if (accounts) {
         // 서명 요청
         // 첫번째 값 data 중요! 한 글자라도 틀리면 다른 값이 나옴
-        const signedToken = await personal.sign("Hello", accounts[0], "Pass");
+        const signedToken = await personal.sign(
+          `Welcome!\n\n\n${uuidv4()}`,
+          accounts[0],
+          "Pass"
+        );
         // console.log(signedToken);
 
-        // 서명된 값 기준으로 지갑주소 꺼내오기 (복호화)
-        const recoverAccount = await personal.ecRecover("Hello", signedToken);
-        console.log(recoverAccount);
+        // 서명된 값 기준으로 지갑주소 꺼내오기 (복호화) -> ecRecover 사용 X (값이 계속 변경됨)
 
         // axios로 POST 요청 보내기
         const response = await axios.post("http://localhost:3000/api/user", {
@@ -41,7 +44,7 @@ const Home: NextPage = () => {
         });
         console.log(response);
 
-        // localStorage에 signedToken 저장 
+        // localStorage에 signedToken 저장
         // - 클라이언트에 저장된 토큰이 유출될 경우 db 접근해서 악의적 행동 가능해짐 -> uuid 사용
         localStorage.setItem("signedToken", signedToken);
       }
