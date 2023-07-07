@@ -4,7 +4,7 @@ import Web3, { Personal } from "web3";
 const MMSDK = new MetaMaskSDK({
   dappMetadata: {
     name: "Project",
-    url: "https://project.project",
+    url: "https://bcs-part4-nextjs.vercel.app/",
   },
 });
 
