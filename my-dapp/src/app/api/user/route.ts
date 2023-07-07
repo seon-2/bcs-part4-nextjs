@@ -18,6 +18,12 @@ export const POST = async (req: Request) => {
         account,
         email,
       },
+      select: {
+        account: true,
+        email: true,
+        nickname: true,
+        signedToken: true,
+      },
     });
 
     // console.log()는 npm run dev 했던 터미널에서 확인 가능
