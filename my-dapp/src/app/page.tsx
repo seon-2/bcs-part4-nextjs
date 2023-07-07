@@ -7,8 +7,23 @@ const Home: NextPage = () => {
   const [email, setEmail] = useState<string>("");
 
   // 이메일 입력 받아서 메타메스크로 로그인
-  const onSubmitMetamask: FormEventHandler = (e) => {
-    e.preventDefault();
+  const onSubmitMetamask: FormEventHandler = async (e) => {
+    try {
+      e.preventDefault();
+
+      // 이메일 없으면 실행 안되게
+      if (!email) return;
+
+      // 메타마스크 로그인
+      // next-env.d.ts에서 Window interface 만들어서 ethereum: any 로 타입 설정하기
+      const accounts = await window.ethereum?.request({
+        method: "eth_requestAccounts",
+      });
+
+      console.log(accounts);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // form 입력 확인
