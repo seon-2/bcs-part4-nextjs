@@ -1,6 +1,22 @@
 // express 역할
 import { prisma } from "@/app/lib/server";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+
+export const GET = async (req: NextRequest) => {
+  try {
+    const { searchParams } = new URL(req.url);
+
+    const signedToken = searchParams.get("signed-token");
+
+    console.log(signedToken);
+
+    return NextResponse.json({
+      ok: true,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 // 함수명이 해당하는 요청으로 정해져있음. (POST), DB와 상호작용하니 비동기로 해야 함
 // 응답 할 때 까지 기다려서 응답이 꼭 있어야 함.

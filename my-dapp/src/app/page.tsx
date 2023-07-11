@@ -43,11 +43,14 @@ const Home: NextPage = () => {
         // 서명된 값 기준으로 지갑주소 꺼내오기 (복호화) -> ecRecover 사용 X (값이 계속 변경됨)
 
         // axios로 POST 요청 보내기
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_URL}/api/user`, {
-          account: accounts[0],
-          email, // 키, 벨류가 이름이 같아 합쳐서
-          signedToken,
-        });
+        const response = await axios.post(
+          `${process.env.NEXT_PUBLIC_URL}/api/user`,
+          {
+            account: accounts[0],
+            email, // 키, 벨류가 이름이 같아 합쳐서
+            signedToken,
+          }
+        );
         console.log(response);
 
         // localStorage에 signedToken 저장
@@ -62,6 +65,16 @@ const Home: NextPage = () => {
   const onSubmitDeploy: FormEventHandler = async (e) => {
     try {
       e.preventDefault();
+
+      // 지갑 주소 없거나 받아야할 데이터 없으면 실행 안되게
+      if (!account || !name || !symbol) return;
+
+      // localStorage에서 signedToken 가져오기
+      const signedToken = localStorage.getItem("signedToken");
+
+      await axios.get(
+        `${process.env.NEXT_PUBLIC_URL}/api/user?signed-token=${signedToken}`
+      );
     } catch (error) {
       console.error(error);
     }
