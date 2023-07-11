@@ -4,7 +4,9 @@ import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { NextPage } from "next";
 import { FormEventHandler, useEffect, useState } from "react";
-import { personal } from "./lib/client";
+import { personal, web3 } from "./lib/client";
+import MINT_NFT_ABI from "./lib/MINT_NFT_ABI.json";
+import MINT_NFT_BYTECODE from "./lib/MINT_NFT_BYTECODE";
 
 const Home: NextPage = () => {
   const [account, setAccount] = useState<string>("");
@@ -62,6 +64,7 @@ const Home: NextPage = () => {
     }
   };
 
+  // 컨트랙트 배포하기
   const onSubmitDeploy: FormEventHandler = async (e) => {
     try {
       e.preventDefault();
@@ -72,9 +75,30 @@ const Home: NextPage = () => {
       // localStorage에서 signedToken 가져오기
       const signedToken = localStorage.getItem("signedToken");
 
-      await axios.get(
+      const userCheckRes = await axios.get(
         `${process.env.NEXT_PUBLIC_URL}/api/user?signed-token=${signedToken}`
       );
+
+      if (userCheckRes.data.ok) {
+        const contract = new web3.eth.Contract(MINT_NFT_ABI);
+
+        // arguments 순서 중요!!
+        // arguments 밑줄이 뜨지만 실행에는 상관없음. @ts-expect-error : type체킹 기능 무시하는 주석
+        const deployRes = await contract
+          .deploy({
+            data: MINT_NFT_BYTECODE,
+            //  @ts-expect-error
+            arguments: [
+              name,
+              symbol,
+              "https://olbm.mypinata.cloud/ipfs/QmU52T5t4bXtoUqQYStgx39DdXy3gLQq7KDuF1F9g3E9Qy",
+              1000,
+            ],
+          })
+          .send({ from: account });
+
+        console.log(deployRes);
+      }
     } catch (error) {
       console.error(error);
     }
