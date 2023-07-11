@@ -8,6 +8,8 @@ import { personal } from "./lib/client";
 
 const Home: NextPage = () => {
   const [email, setEmail] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [symbol, setSymbol] = useState<string>("");
 
   // 이메일 입력 받아서 메타메스크로 로그인
   const onSubmitMetamask: FormEventHandler = async (e) => {
@@ -53,6 +55,14 @@ const Home: NextPage = () => {
     }
   };
 
+  const onSubmitDeploy: FormEventHandler = async (e) => {
+    try {
+      e.preventDefault();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   // form 입력 확인
   useEffect(() => {
     console.log(email);
@@ -72,6 +82,20 @@ const Home: NextPage = () => {
             type="submit"
             value="메타마스크 로그인"
           />
+        </form>
+        <form className="mt-2" onSubmit={onSubmitDeploy}>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <input
+            className="ml-2"
+            type="text"
+            value={symbol}
+            onChange={(e) => setSymbol(e.target.value)}
+          />
+          <input type="submit" value="스마트컨트랙트배포" />
         </form>
       </div>
     </div>
