@@ -8,7 +8,28 @@ export const GET = async (req: NextRequest) => {
 
     const signedToken = searchParams.get("signed-token");
 
-    console.log(signedToken);
+    const user = await prisma.user.findFirst({
+      where: {
+        signedToken,
+      },
+    });
+
+    console.log(user);
+
+    // user가 없는 경우 에러 처리
+    // 화면에서 로그인 하고 개발자 도구에서 수동으로 signedToken 변경하고 컨트랙트 배포 시도
+    // 콘솔 에러 400번 발생. response에서 'Not exist token.' 확인
+    if (!user) {
+      return NextResponse.json(
+        {
+          ok: false,
+          error: "Not exist token.",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
 
     return NextResponse.json({
       ok: true,
