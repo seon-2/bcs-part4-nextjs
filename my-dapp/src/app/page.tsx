@@ -7,6 +7,7 @@ import { FormEventHandler, useEffect, useState } from "react";
 import { personal } from "./lib/client";
 
 const Home: NextPage = () => {
+  const [account, setAccount] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [symbol, setSymbol] = useState<string>("");
@@ -27,6 +28,9 @@ const Home: NextPage = () => {
 
       // 메타마스크 로그인 해서 지갑주소 있으면
       if (accounts) {
+        // 지갑주소 변수에 담기
+        setAccount(accounts[0]);
+
         // 서명 요청
         // 첫번째 값 data 중요! 한 글자라도 틀리면 다른 값이 나옴
         const signedToken = await personal.sign(
