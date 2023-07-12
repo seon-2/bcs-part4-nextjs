@@ -7,12 +7,14 @@ import { FormEventHandler, useEffect, useState } from "react";
 import { personal, web3 } from "./lib/client";
 import MINT_NFT_ABI from "./lib/MINT_NFT_ABI.json";
 import MINT_NFT_BYTECODE from "./lib/MINT_NFT_BYTECODE";
+import ContractCard, { ContractCardProps } from "@/components/ContractCard";
 
 const Home: NextPage = () => {
   const [account, setAccount] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [symbol, setSymbol] = useState<string>("");
+  const [contracts, setContracts] = useState<ContractCardProps[]>();
 
   // 컨트랙트 조회하기
   const getContracts = async () => {
@@ -22,6 +24,8 @@ const Home: NextPage = () => {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_URL}/api/contract?signed-token=${signedToken}`
       );
+
+      setContracts(response.data.contracts);
 
       console.log(response);
     } catch (error) {
@@ -182,6 +186,11 @@ const Home: NextPage = () => {
           />
           <input type="submit" value="스마트컨트랙트배포" />
         </form>
+        <ul>
+          {contracts?.map((v, i) => (
+            <ContractCard key={i} address={v.address} user={v.user} />
+          ))}
+        </ul>
       </div>
     </div>
   );
