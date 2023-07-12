@@ -184,7 +184,11 @@ const Home: NextPage = () => {
             value={symbol}
             onChange={(e) => setSymbol(e.target.value)}
           />
-          <input type="submit" value="스마트컨트랙트배포" />
+          <input
+            className="ml-2 px-2 py-1 border-2 border-black rounded-md"
+            type="submit"
+            value="스마트컨트랙트 배포"
+          />
         </form>
         <ul>
           {contracts?.map((v, i) => (
