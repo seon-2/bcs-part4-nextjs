@@ -192,7 +192,12 @@ const Home: NextPage = () => {
         </form>
         <ul>
           {contracts?.map((v, i) => (
-            <ContractCard key={i} address={v.address} user={v.user} />
+            <ContractCard
+              key={i}
+              address={v.address}
+              user={v.user}
+              account={account}
+            />
           ))}
         </ul>
       </div>
