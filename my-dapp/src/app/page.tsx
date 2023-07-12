@@ -14,6 +14,21 @@ const Home: NextPage = () => {
   const [name, setName] = useState<string>("");
   const [symbol, setSymbol] = useState<string>("");
 
+  // 컨트랙트 조회하기
+  const getContracts = async () => {
+    try {
+      const signedToken = localStorage.getItem("signedToken");
+
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_URL}/api/contract?signed-token=${signedToken}`
+      );
+
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   // 이메일 입력 받아서 메타메스크로 로그인
   const onSubmitMetamask: FormEventHandler = async (e) => {
     try {
@@ -130,6 +145,13 @@ const Home: NextPage = () => {
   useEffect(() => {
     console.log(email);
   }, [email]);
+
+  // 컨트랙트 조회 함수 실행
+  useEffect(() => {
+    if (!account) return;
+
+    getContracts();
+  }, [account]);
 
   return (
     <div className="bg-red-100 min-h-screen p-24">
