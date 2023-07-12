@@ -97,6 +97,27 @@ const Home: NextPage = () => {
           })
           .send({ from: account });
 
+          // 배포 주소 확인
+          if (deployRes["_address"]) {
+          console.log(deployRes["_address"]);
+
+          // 컨트랙트 데이터 보내기
+          const contractRes = await axios.post(
+            `${process.env.NEXT_PUBLIC_URL}/api/contract`,
+            {
+              address: deployRes["_address"],
+            },
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          // 콘솔에 출력해서 확인
+          console.log(contractRes);
+        }
+
         console.log(deployRes);
       }
     } catch (error) {
