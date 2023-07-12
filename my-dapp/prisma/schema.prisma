@@ -19,11 +19,22 @@ model User {
   email         String        
   nickname      String?       @unique
   signedToken   String?
+  contracts     Contract[]
 }
+
+// User와 Contract의 관계
+// User는 Contract를 여러 개 가질 수 있음. Contract는 하나의 User에만 속할 수 있음. (1:N)
+// Contract에 account 가지게 하면 해결? -> 가능하지만, 데이터 중복 발생
+// 대신, key값으로 db를 참조!
 
 model Contract {
   id            Int           @default(autoincrement())   @id
   createdAt     DateTime      @default(now())             
   updatedAt     DateTime      @updatedAt
   address       String        @unique
+  userId        Int
+  user          User          @relation(fields: [userId], references: [id])
+
+  // relationMode = "prisma"일 때 39번줄 필요
+  @@index([userId])
 }
