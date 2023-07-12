@@ -45,6 +45,10 @@ export const GET = async (req: NextRequest) => {
       where: {
         userId: user.id,
       },
+      select: {
+        address: true,
+        user: true,
+      },
     });
 
     // 컨트랙트 확인
@@ -52,6 +56,7 @@ export const GET = async (req: NextRequest) => {
 
     return NextResponse.json({
       ok: true,
+      contracts,
     });
   } catch (error) {
     console.error(error);
