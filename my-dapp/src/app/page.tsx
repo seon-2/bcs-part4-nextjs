@@ -97,15 +97,16 @@ const Home: NextPage = () => {
           })
           .send({ from: account });
 
-          // 배포 주소 확인
-          if (deployRes["_address"]) {
+        // 배포 주소 확인
+        if (deployRes["_address"]) {
           console.log(deployRes["_address"]);
 
-          // 컨트랙트 데이터 보내기
+          // 컨트랙트 데이터 보내기 (address, signedToken)
           const contractRes = await axios.post(
             `${process.env.NEXT_PUBLIC_URL}/api/contract`,
             {
               address: deployRes["_address"],
+              signedToken,
             },
             {
               headers: {
